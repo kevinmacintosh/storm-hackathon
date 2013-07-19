@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Storm Hackathon - Hopper Storm Hackathon</title>
+  <title>Storm Hackathon Getting Started - Hopper Storm Hackathon</title>
   <meta name="author" content="Ilya Kaplun">
 
   
-  <meta name="description" content="GitHub Repos Status updating&#8230; @hackreduce on GitHub $.domReady(function(){ if (!window.jXHR){ var jxhr = document.createElement('script'); &hellip;">
+  <meta name="description" content="Storm Hackathon Getting Started Jul 9th, 2013 Getting Started This will help you get started with Storm. At the end of this exercise, you should be &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -41,7 +41,7 @@
 </hgroup>
 
 </header>
-  <!-- <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
   <li><a href="/storm-hackathon/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
   
 </ul>
@@ -59,17 +59,160 @@
   <li><a href="/storm-hackathon/datasets">Datasets</a></li>
 </ul>
 
-</nav> -->
+</nav> 
   <div id="main">
     <div id="content">
-      <div class="blog-index">
+      <div>
+<article role="article">
+  
+  <header>
+    <h1 class="entry-title">Storm Hackathon Getting Started</h1>
+    <p class="meta">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-07-09T10:03:00-04:00" pubdate data-updated="true">Jul 9<span>th</span>, 2013</time></p>
+  </header>
+  
+  <h1>Getting Started</h1>
+
+<p>This will help you get started with Storm. At the end of this exercise, you should be able to submit topologies to the Storm cluster.</p>
+
+<h2>Prerequisites</h2>
+
+<ol>
+<li> A sane shell (<a href="http://www.cygwin.com/">Cygwin</a> may or may not work)</li>
+<li> <a href="http://git-scm.com/downloads">git</a></li>
+<li> A <a href="http://www.oracle.com/technetwork/java/javasebusiness/downloads/java-archive-downloads-javase6-419409.html#jdk-6u45-oth-JPR">JDK</a></li>
+<li> <a href="http://maven.apache.org/download.cgi">Maven</a></li>
+<li> A fork of the <a href="https://github.com/hackreduce/storm-hackathon">storm-hackathon repo</a></li>
+<li> A team name (this will be used to partition your topologies and data from other teams)</li>
+</ol>
+
+
+<h2>Setting up your Environment</h2>
+
+<p>Here, we&rsquo;ll clone your forked repository, build the example topologies and submit one to the Storm cluster.</p>
+
+<pre><code>export TEAM_NAME=&lt;my-team-name&gt;
+git clone https://github.com/&lt;your github.com account&gt;/storm-hackathon
+cd storm-hackathon
+mvn package
+./tools/submit org.hackreduce.storm.gnip.topology.GnipStreamTopology 
+</code></pre>
+
+<p>If all of these commands were successful, you should now see your topology running in the <a href="http://cluster-7-master.sl.hackreduce.net:8080">Storm UI</a>. It should appear as <code>&lt;my-team-name&gt;-GNIP_EDC_Topology</code>.</p>
+
+<p>You may now kill this example topology:</p>
+
+<pre><code>./tools/kill &lt;my-team-name&gt;-GNIP_EDC_Topology
+</code></pre>
+
+<p>Note that if you don&rsquo;t specify a team name (through the <code>TEAM_NAME</code> environment variable), the helper code will pick one at random for you. Set the <code>TEAM_NAME</code> environment variable to get a constant prefix.</p>
+
+<h2>Hack!</h2>
+
+<p>Congradulations, you are now ready to create your own topologies and submit them in the same way: simply change the name of the main class when submitting.</p>
+
+<p>Other example topologies are available in your forked repository. You can start from one of those or from scratch.</p>
+
+<p>In order to submit a topology prefixed with your team&rsquo;s name, use the <code>org.hackreduce.storm.HackReduceStormSubmitter</code> utility class or simply make sure you name your topologies accordingly.</p>
+
+<h1>Resources</h1>
+
+<ul>
+<li><a href="http://storm-project.net/">storm-project.net</a></li>
+</ul>
+
+
+<h2>Learning Storm</h2>
+
+<ul>
+<li><a href="https://github.com/nathanmarz/storm/wiki/Tutorial">storm tutorial</a></li>
+<li><a href="https://github.com/nathanmarz/storm/wiki/Trident-tutorial">trident tutorial</a></li>
+</ul>
+
+
+<h3>Spouts, Bolts, etc.</h3>
+
+<ul>
+<li> <a href="https://github.com/rapportive-oss/storm-amqp-spout">storm-kestrel</a>: Adapter to use <a href="https://github.com/robey/kestrel/">Kestrel</a> as a spout</li>
+<li> <a href="https://github.com/sorenmacbeth/storm-pubsub">storm-pubsub</a>: A spout that subscribes to a Redis pubsub stream</li>
+<li> <a href="https://github.com/nathanmarz/storm-contrib/tree/master/storm-kafka">storm-kafka</a>: <a href="http://kafka.apache.org/">Kafka</a> spout</li>
+<li> <a href="https://github.com/nathanmarz/storm-contrib/">storm-contrib</a>: lots of spouts and bolts for various endpoints (e.g. Mongo, cassandra, etc.)</li>
+<li> <a href="https://github.com/nathanmarz/trident-memcached">trident-memcached</a>: Memcached Trident State</li>
+<li> <a href="https://github.com/quintona/storm-r">Storm-R</a>: provides a trident function that enables integration with R functions</li>
+<li> <a href="https://github.com/pmerienne/trident-ml">trident-ml</a>: machine learning on Storm</li>
+</ul>
+
+
+<h3>Polyglot Storm</h3>
+
+<ul>
+<li><a href="https://github.com/nathanmarz/storm/wiki/Clojure-DSL">clojure</a></li>
+<li><a href="https://github.com/velvia/ScalaStorm">scala</a></li>
+<li><a href="https://github.com/twitter/tormenta">tormenta</a> &ndash; library for type safe kestrel/kafka spouts from twitter</li>
+<li><a href="https://github.com/colinsurprenant/redstorm">ruby</a></li>
+<li><a href="https://github.com/AirSage/Petrel">python</a></li>
+<li><a href="https://github.com/gphat/io-storm">perl</a></li>
+<li><a href="https://github.com/lazyshot/storm-php">php</a></li>
+</ul>
+
+
+<h2>Presentations</h2>
+
+<div class="embed-video-container"><iframe src="http://player.vimeo.com/video/40972420 "></iframe></div>
+
+
+<ul>
+<li><a href="http://www.infoq.com/presentations/Storm-Introduction">Storm Introduction</a> &ndash; Nathan Marz 2013 Storm presentation</li>
+<li><a href="http://www.infoq.com/presentations/Storm">Storm: Distributed and Fault-tolerant Real-time Computation</a> &ndash; Nathan Marz talking about storm in 2011</li>
+</ul>
+
+
+  
+    <footer>
+      <p class="meta">
+        
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-07-09T10:03:00-04:00" pubdate data-updated="true">Jul 9<span>th</span>, 2013</time>
+        
+      </p>
+      
+        <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://hackreduce.github.io/storm-hackathon/index.html" data-via="" data-counturl="http://hackreduce.github.io/storm-hackathon/index.html" >Tweet</a>
   
   
-  <div class="pagination">
-    
-    
-  </div>
+  
 </div>
+
+      
+    </footer>
+  
+</article>
+
+</div>
+
 <aside class="sidebar">
   
     <section>
@@ -86,7 +229,7 @@
 <section>
   <h1>GitHub Repos</h1>
   <ul id="gh_repos">
-    <li class="loading">Status updating&#8230;</li>
+    <li class="loading">Status updating...</li>
   </ul>
   
   <a href="https://github.com/hackreduce">@hackreduce</a> on GitHub
@@ -103,7 +246,7 @@
 
         github.showRepos({
             user: 'hackreduce',
-            count: ,
+            count: 1,
             skip_forks: true,
             target: '#gh_repos'
         });
@@ -118,6 +261,7 @@
 
   
 </aside>
+
 
     </div>
   </div>

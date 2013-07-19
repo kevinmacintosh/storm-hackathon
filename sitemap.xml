@@ -2,27 +2,31 @@
 <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
     <url>
         <loc>http://hackreduce.github.io/storm-hackathon/archives/</loc>
-        <lastmod>2013-07-09T09:47:35-04:00</lastmod>
+        <lastmod>2013-07-18T20:53:02-04:00</lastmod>
     </url>
     <url>
         <loc>http://hackreduce.github.io/storm-hackathon/blog/archives/</loc>
-        <lastmod>2013-07-09T09:47:35-04:00</lastmod>
+        <lastmod>2013-07-18T20:53:02-04:00</lastmod>
     </url>
     <url>
         <loc>http://hackreduce.github.io/storm-hackathon/cluster/</loc>
-        <lastmod>2013-07-17T15:28:23-04:00</lastmod>
+        <lastmod>2013-07-18T21:03:14-04:00</lastmod>
     </url>
     <url>
         <loc>http://hackreduce.github.io/storm-hackathon/datasets/</loc>
-        <lastmod>2013-07-18T20:48:10-04:00</lastmod>
+        <lastmod>2013-07-18T20:53:02-04:00</lastmod>
     </url>
     <url>
         <loc>http://hackreduce.github.io/storm-hackathon/gnip/</loc>
-        <lastmod>2013-07-18T10:01:13-04:00</lastmod>
+        <lastmod>2013-07-18T20:53:02-04:00</lastmod>
     </url>
     <url>
         <loc>http://hackreduce.github.io/storm-hackathon/</loc>
-        <lastmod>2013-07-09T18:30:02-04:00</lastmod>
+        <lastmod>2013-07-18T20:53:02-04:00</lastmod>
+    </url>
+    <url>
+        <loc>http://hackreduce.github.io/storm-hackathon/</loc>
+        <lastmod>2013-07-18T21:02:31-04:00</lastmod>
     </url>
     <url>
         <loc>http://hackreduce.github.io/storm-hackathon/robots.txt</loc>
@@ -30,6 +34,6 @@
     </url>
     <url>
         <loc>http://hackreduce.github.io/storm-hackathon/start/</loc>
-        <lastmod>2013-07-15T09:54:26-04:00</lastmod>
+        <lastmod>2013-07-18T20:53:02-04:00</lastmod>
     </url>
 </urlset>
