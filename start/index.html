@@ -133,14 +133,19 @@ mvn package
 <ol>
 <li> <a href="https://www.virtualbox.org/wiki/Downloads">Install VirtualBox</a></li>
 <li> <a href="http://docs.vagrantup.com/v2/installation/">Install Vagrant</a></li>
-<li> Initialize Vagrant project (this will create a <em>Vagrantfile</em>)
-<code>
-vagrant init storm https://dl.dropboxusercontent.com/u/2759041/Storm/stormvm.box
-</code></li>
-<li> Add the following line to your Vagrantfile
-<code>
-  config.vm.network :hostonly, ip: "192.168.33.10"
-</code></li>
+<li><p> Initialize Vagrant project (this will create a <em>Vagrantfile</em>)
+<div>
+<pre><code class='sh'>vagrant init storm <a href="https://dl.dropboxusercontent.com/u/2759041/Storm/stormvm.box">https://dl.dropboxusercontent.com/u/2759041/Storm/stormvm.box</a></code></pre>
+</div></p></li>
+<li><p> Add the following line to your Vagrantfile
+<div>
+<pre><code class='ruby'>config.vm.network :hostonly, ip: &quot;192.168.101.11&quot;</code></pre>
+</div></p></li>
+<li><p> Start VM
+<div>
+<pre><code class='sh'>vagrant up</code></pre>
+</div></p></li>
+<li><p> open storm ui <a href="http://192.168.101.11:8082">http://192.168.101.11:8082</a></p></li>
 </ol>
 
 
