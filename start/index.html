@@ -126,6 +126,32 @@ mvn package
 
 <p>In order to submit a topology prefixed with your team&rsquo;s name, use the <code>org.hackreduce.storm.HackReduceStormSubmitter</code> utility class or simply make sure you name your topologies accordingly.</p>
 
+<h1>Storm VM</h1>
+
+<p>If you would like to run a mini Storm cluster in a <a href="http://www.vagrantup.com/">Vagrant</a> vm, follow these instructions:</p>
+
+<ol>
+<li> <a href="https://www.virtualbox.org/wiki/Downloads">Install VirtualBox</a></li>
+<li> <a href="http://docs.vagrantup.com/v2/installation/">Install Vagrant</a></li>
+<li> Initialize Vagrant project (this will create a <em>Vagrantfile</em>)
+<code>
+vagrant init storm https://dl.dropboxusercontent.com/u/2759041/Storm/stormvm.box
+</code></li>
+<li> Add the following line to your Vagrantfile
+<code>
+  config.vm.network :hostonly, ip: "192.168.33.10"
+</code></li>
+</ol>
+
+
+<p>The vagrant box was built with the following software versions:</p>
+
+<ul>
+<li>Vagrant 1.1.0</li>
+<li>VirtualBox 4.1.23</li>
+</ul>
+
+
 <h1>Resources</h1>
 
 <ul>
