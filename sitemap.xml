@@ -9,8 +9,16 @@
         <lastmod>2013-07-09T09:47:35-04:00</lastmod>
     </url>
     <url>
+        <loc>http://hackreduce.github.io/storm-hackathon/cluster/</loc>
+        <lastmod>2013-07-17T15:28:23-04:00</lastmod>
+    </url>
+    <url>
         <loc>http://hackreduce.github.io/storm-hackathon/datasets/</loc>
-        <lastmod>2013-07-09T14:11:21-04:00</lastmod>
+        <lastmod>2013-07-18T20:48:10-04:00</lastmod>
+    </url>
+    <url>
+        <loc>http://hackreduce.github.io/storm-hackathon/gnip/</loc>
+        <lastmod>2013-07-18T10:01:13-04:00</lastmod>
     </url>
     <url>
         <loc>http://hackreduce.github.io/storm-hackathon/</loc>
@@ -22,6 +30,6 @@
     </url>
     <url>
         <loc>http://hackreduce.github.io/storm-hackathon/start/</loc>
-        <lastmod>2013-07-09T10:52:35-04:00</lastmod>
+        <lastmod>2013-07-15T09:54:26-04:00</lastmod>
     </url>
 </urlset>
