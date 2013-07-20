@@ -9,7 +9,7 @@
   <meta name="author" content="Ilya Kaplun">
 
   
-  <meta name="description" content="Gnip Jul 18th, 2013 Jul 18th, 2013 Tweet GitHub Repos Status updating... @hackreduce on GitHub $.domReady(function(){ if (!window.jXHR){ var jxhr = &hellip;">
+  <meta name="description" content="Gnip Jul 18th, 2013 GNIP Enterprise Data Collector (EDC). GNIP provides access to enriched data from sources including Twitter, Facebook, Youtube, &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -82,7 +82,32 @@
 <time datetime="2013-07-18T10:01:00-04:00" pubdate data-updated="true">Jul 18<span>th</span>, 2013</time></p>
   </header>
   
-  
+  <h1>GNIP Enterprise Data Collector (EDC).</h1>
+
+<p>GNIP provides access to enriched data from sources including Twitter, Facebook, Youtube, etc. There are several ways to access the data. The example we have set up is Youtube uploads using EDC. It is a stream of events describing uploads, matching some criteria. The data is retrieved by periodically (every 1 sec) connecting to a specified endpoint, receiving the response and processing it. The response contains a “refreshUrl” parameter, which should be used as the target endpoint for the next request. The topology uses tick events to trigger EDC requests:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">tickConfig</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">Config</span><span class="o">.</span><span class="na">TOPOLOGY_TICK_TUPLE_FREQ_SECS</span><span class="o">,</span> <span class="mi">1</span><span class="o">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The request is performed by GnipEdcRequestBolt, response is parsed and each event is emitted to “gnip_events” stream. There is two more bolts in the topology. GnipEventTransformBolt parses the event, extracts two fields (“title”, “link”) from it and emits a concatenated value as “msgs” stream. GnipEventPersistBolt simply prints the values.
+Quick Start Guide.</p>
+
+<p>Modify <code>./src/main/java/org/hackreduce/storm/gnip/topology/GnipStreamTopology.java</code> providing valid credentials to connect to GNIP EDC.</p>
+
+<h2>Build the project:</h2>
+
+<p>mvn clean package</p>
+
+<h2>Run it:</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>tools/submit org.hackreduce.storm.gnip.topology.GnipStreamTopology 1
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The command line parameter <code>1</code> will force the topology to run in local cluster. If no parameter is specified, the topology will be submitted to the cluster using StormSubmitter.submitTopology() method to localhost as Niumbus.</p>
 
   
     <footer>
