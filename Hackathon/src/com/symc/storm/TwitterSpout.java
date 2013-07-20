@@ -14,6 +14,7 @@ import backtype.storm.utils.Utils;
 import java.util.Map;
 import java.util.concurrent.LinkedBlockingQueue;
 
+import twitter4j.FilterQuery;
 import twitter4j.StallWarning;
 import twitter4j.Status;
 import twitter4j.StatusDeletionNotice;
@@ -76,7 +77,8 @@ public class TwitterSpout extends BaseRichSpout {
 		_twitterStream.setOAuthConsumer(consumer, consumerSecret);
 		_twitterStream.setOAuthAccessToken(accessToken);
 		_twitterStream.addListener(listener);
-		_twitterStream.sample();
+		String[] filters = {"SDCC", "comiccon", "cosplay"};
+		_twitterStream.filter(new FilterQuery(0, null, filters, null));
 	}
 
 	@Override
