@@ -146,6 +146,16 @@ mvn package
 <pre><code class='sh'>vagrant up</code></pre>
 </div></p></li>
 <li><p> open storm ui <a href="http://192.168.101.11:8082">http://192.168.101.11:8082</a></p></li>
+<li><p> configure storm submitter to point to the local cluster
+<div>
+<pre><code class='sh'>mkdir -p ~/.storm
+echo &lsquo;nimbus.host: &quot;192.168.101.11&quot;&rsquo; &gt; ~/.storm/storm.yaml</code></pre>
+</div></p>
+
+<ul>
+<li>   to point back to the softlayer cluster, change <code>nimbus.host</code> to <code>cluster-7-master.sl.hackreduce.net</code></li>
+</ul>
+</li>
 </ol>
 
 
