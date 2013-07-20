@@ -1,4 +1,5 @@
 package com.symc.storm;
+
 import backtype.storm.Config;
 import backtype.storm.LocalCluster;
 import backtype.storm.StormSubmitter;
@@ -19,6 +20,25 @@ public class SymantecTopology {
 
         public static class HeatBolt extends BaseRichBolt {
 
+			@Override
+			public void prepare(Map stormConf, TopologyContext context,
+					OutputCollector collector) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void execute(Tuple input) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void declareOutputFields(OutputFieldsDeclarer declarer) {
+				// TODO Auto-generated method stub
+				
+			}
+
 
         }
 
@@ -26,7 +46,7 @@ public class SymantecTopology {
         public static void main(String[] args) throws Exception {
            TopologyBuilder builder = new TopologyBuilder();
 
-           builder.setSpout("tweet", new TwitterSpout(), 10);
+           builder.setSpout("tweet", new TwitterSpout(args[0], args[1]), 10);
            builder.setBolt("heat", new HeatBolt(), 3)
                 .fieldsGrouping("tweet", new Fields("location"));
           Config conf = new Config();

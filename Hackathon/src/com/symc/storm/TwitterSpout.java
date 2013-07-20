@@ -15,19 +15,25 @@ import backtype.storm.tuple.Values;
 import backtype.storm.utils.Utils;
 import java.util.Map;
 import java.util.concurrent.LinkedBlockingQueue;
+
+import twitter4j.StallWarning;
 import twitter4j.Status;
 import twitter4j.StatusDeletionNotice;
 import twitter4j.StatusListener;
 
-public class TwitterSampleSpout extends BaseRichSpout {
-    SpoutOutputCollector _collector;
+public class TwitterSpout extends BaseRichSpout {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	SpoutOutputCollector _collector;
     LinkedBlockingQueue<Status> queue = null;
     TwitterStream _twitterStream;
     String _username;
     String _pwd;
     
     
-    public TwitterSampleSpout(String username, String pwd) {
+    public TwitterSpout(String username, String pwd) {
         _username = username;
         _pwd = pwd;
     }
@@ -58,6 +64,12 @@ public class TwitterSampleSpout extends BaseRichSpout {
             @Override
             public void onException(Exception e) {
             }
+
+			@Override
+			public void onStallWarning(StallWarning arg0) {
+				// TODO Auto-generated method stub
+				
+			}
             
         };
         TwitterStreamFactory fact = new TwitterStreamFactory(new ConfigurationBuilder().setUser(_username).setPassword(_pwd).build());
