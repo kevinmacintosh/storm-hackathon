@@ -27,12 +27,8 @@ public class TwitterSpout extends BaseRichSpout {
 	SpoutOutputCollector _collector;
 	LinkedBlockingQueue<Status> queue = null;
 	TwitterStream _twitterStream;
-	String _username;
-	String _pwd;
 
-	public TwitterSpout(String username, String pwd) {
-		_username = username;
-		_pwd = pwd;
+	public TwitterSpout() {
 	}
 
 	@Override
