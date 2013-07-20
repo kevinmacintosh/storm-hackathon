@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>cluster - Hopper Storm Hackathon</title>
+  <title>Hopper Storm Hackathon - Hopper Storm Hackathon</title>
   <meta name="author" content="Ilya Kaplun">
 
   
-  <meta name="description" content="Cluster Jul 17th, 2013 To deploy and demo your topology with production data, you can use the Hopper SoftLayer storm cluster. Cluster info Storm &hellip;">
+  <meta name="description" content="Hopper Storm Hackathon Jul 19th, 2013 Getting Started with Finagle Hopper is offerring 3 thrift-based Finagle RPC services: Geocoder: geocode an &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://hackreduce.github.io/storm-hackathon/cluster/">
+  <link rel="canonical" href="http://hackreduce.github.io/storm-hackathon/finagle/">
   <link href="/storm-hackathon/favicon.png" rel="icon">
   <link href="/storm-hackathon/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
    <link href="/storm-hackathon/stylesheets/data-table.css" media="screen, projection" rel="stylesheet" type="text/css" />
@@ -66,7 +66,7 @@
 <article role="article">
   
   <header>
-    <h1 class="entry-title">Cluster</h1>
+    <h1 class="entry-title">Hopper Storm Hackathon</h1>
     <p class="meta">
 
 
@@ -79,56 +79,61 @@
   
 
 
-<time datetime="2013-07-17T09:14:00-04:00" pubdate data-updated="true">Jul 17<span>th</span>, 2013</time></p>
+<time datetime="2013-07-19T10:03:00-04:00" pubdate data-updated="true">Jul 19<span>th</span>, 2013</time></p>
   </header>
   
-  <p>To deploy and demo your topology with production data, you can use the Hopper SoftLayer storm cluster.</p>
+  <h1>Getting Started with Finagle</h1>
 
-<h1>Cluster info</h1>
-
-<h2>Storm</h2>
+<p>Hopper is offerring 3 thrift-based Finagle RPC services:</p>
 
 <ul>
-<li><a href="http://cluster-7-master.sl.hackreduce.net:5698/">http://cluster-7-master.sl.hackreduce.net:5698/</a> &ndash; Storm UI</li>
-<li>cluster-7-master.sl.hackreduce.net:8745 &ndash; Nimbus thrift port</li>
+<li>Geocoder: geocode an address, or reverse geocode a coordinate using Google&rsquo;s geocoder</li>
+<li>SpiderBunny: fetch the contents of a URL honoring <code>robots.txt</code></li>
+<li>HCache: a simple cache used by both the Geocoder and SpiderBunny, but directly usable a topology as well.</li>
 </ul>
 
 
-<h2>Riak Nodes</h2>
+<h2>Get the thrift file</h2>
 
-<p>Riak is available on the following nodes on port:</p>
+<p>Each service has its own <code>.thrift</code> file that contains its interface definition.</p>
 
 <ul>
-<li>cluster-7-slave-(00,02,03,06).sl.hackreduce.net:8098</li>
+<li><a href="/storm-hackathon/finagle/geocoder.thift">Geocoder</a></li>
+<li><a href="/storm-hackathon/finagle/spiderbunny.thrift">SpideBunny</a></li>
+<li><a href="/storm-hackathon/finagle/hcache.thrift">HCache</a></li>
 </ul>
 
 
-<h2>MySQL</h2>
+<h2>Compile it</h2>
 
-<p>MySQL is available on cluster-7-slave-08.sl.hackreduce.net:3306</p>
+<p>Use the thrift compiler of your choice to get the bindings for the language you are using (Java, Scala, Ruby, etc.)</p>
 
-<p>username: hackreduce
-password: codebigorgohome</p>
+<ul>
+<li>Scrooge: compiles to scala-idiomatic classes
+*</li>
+</ul>
 
-<p>Please prefix your database name with your team&rsquo;s name.</p>
 
-<h2>Hopper Finagle Services</h2>
+<h2>Use it</h2>
 
-<p>Finagle services are described <a href="/storm-hackathon/finagle/">here</a></p>
+<p>Service endpoints are as follows:</p>
 
-<h2>SSH</h2>
+<ul>
+<li>Geocoder: <code>cluster-7-slave-06.sl.hackreduce.net:5874</code></li>
+<li>SpiderBunny: <code>cluster-7-slave-07.sl.hackreduce.net:5656</code></li>
+<li><p>HCache: <code>cluster-7-slave-03.sl.hackreduce.net:9098</code></p>
 
-<p>You can SSH into any node using the following credentials: <a href="hackreduce-0720.pem">hackreduce-0720.pem</a></p>
+<p> import com.twitter.finagle.<em>
+ import com.hopper.spiderbunny.</em></p>
 
-<p>And then:</p>
+<p> val sb = Thrift.newIface[SpiderBunny.FutureIface](&ldquo;cluster-7-slave-07.sl.hackreduce.net:5656&#8220;`</p>
 
-<pre><code>chmod 600 hackreduce-0720.pem
-ssh -i hackreduce-0720.pem hackreduce@&lt;hostname&gt;.sl.hackreduce.net
-</code></pre>
+<p> sb.fetch(&ldquo;<a href="http://www.hackreduce.org">http://www.hackreduce.org</a>&rdquo;)
+   .map { response =>
+     println(&ldquo;Content type is: &rdquo; + response.headers(&ldquo;Content-Type&rdquo;))
+   }</p></li>
+</ul>
 
-<h2>Anything else</h2>
-
-<p>Is not available, but ask the Hopper guys and maybe it&rsquo;ll happen.</p>
 
   
     <footer>
@@ -146,13 +151,13 @@ ssh -i hackreduce-0720.pem hackreduce@&lt;hostname&gt;.sl.hackreduce.net
   
 
 
-<time datetime="2013-07-17T09:14:00-04:00" pubdate data-updated="true">Jul 17<span>th</span>, 2013</time>
+<time datetime="2013-07-19T10:03:00-04:00" pubdate data-updated="true">Jul 19<span>th</span>, 2013</time>
         
       </p>
       
         <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://hackreduce.github.io/storm-hackathon/cluster/index.html" data-via="" data-counturl="http://hackreduce.github.io/storm-hackathon/cluster/index.html" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://hackreduce.github.io/storm-hackathon/finagle/index.html" data-via="" data-counturl="http://hackreduce.github.io/storm-hackathon/finagle/index.html" >Tweet</a>
   
   
   
