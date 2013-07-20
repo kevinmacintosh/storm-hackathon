@@ -6,41 +6,36 @@ import backtype.storm.StormSubmitter;
 import backtype.storm.task.OutputCollector;
 import backtype.storm.task.TopologyContext;
 import backtype.storm.testing.TestWordSpout;
+import backtype.storm.topology.BasicOutputCollector;
 import backtype.storm.topology.OutputFieldsDeclarer;
 import backtype.storm.topology.TopologyBuilder;
+import backtype.storm.topology.base.BaseBasicBolt;
 import backtype.storm.topology.base.BaseRichBolt;
 import backtype.storm.tuple.Fields;
 import backtype.storm.tuple.Tuple;
 import backtype.storm.tuple.Values;
 import backtype.storm.utils.Utils;
+
+import java.util.HashMap;
 import java.util.Map;
 
 public class SymantecTopology {
 
 
-        public static class HeatBolt extends BaseRichBolt {
-        	
-			@Override
-			public void prepare(Map stormConf, TopologyContext context,
-					OutputCollector collector) {
-				// TODO Auto-generated method stub
-				
-			}
+    public static class HeatBolt extends BaseBasicBolt {
 
-			@Override
-			public void execute(Tuple input) {
-				// TODO Auto-generated method stub
-				
-			}
+        @Override
+        public void execute(Tuple tuple, BasicOutputCollector collector) {
+            String word = tuple.getString(0);
 
-			@Override
-			public void declareOutputFields(OutputFieldsDeclarer declarer) {
-				// TODO Auto-generated method stub
-				
-			}
-
-
+            collector.emit(new Values(word));
         }
+
+        @Override
+        public void declareOutputFields(OutputFieldsDeclarer declarer) {
+            declarer.declare(new Fields("location"));
+        }
+    }
 
 
         public static void main(String[] args) throws Exception {
