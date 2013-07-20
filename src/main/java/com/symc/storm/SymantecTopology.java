@@ -12,6 +12,8 @@ import backtype.storm.tuple.Tuple;
 import backtype.storm.tuple.Values;
 import backtype.storm.utils.Utils;
 
+import twitter4j.Status;
+
 public class SymantecTopology {
 
 	public static class HeatBolt extends BaseBasicBolt {
@@ -23,8 +25,9 @@ public class SymantecTopology {
 
 		@Override
 		public void execute(Tuple tuple, BasicOutputCollector collector) {
-			counter +=1;
-			collector.emit(new Values(tuple.getString(0), counter));
+			Status status = (Status) tuple.getValue(0);
+			counter++;
+			collector.emit(new Values(status.getGeoLocation(), counter));
 		}
 
 		@Override
