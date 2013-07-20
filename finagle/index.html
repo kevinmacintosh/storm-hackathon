@@ -57,6 +57,8 @@
   <li><a href="/storm-hackathon/">Home page</a></li>
   <li><a href="/storm-hackathon/start">Getting Started</a></li>
   <li><a href="/storm-hackathon/datasets">Datasets</a></li>
+  <li><a href="/storm-hackathon/cluster">Cluster</a></li>
+  <li><a href="/storm-hackathon/finagle">Finagle</a></li>
 </ul>
 
 </nav> 
@@ -98,7 +100,7 @@
 <p>Each service has its own <code>.thrift</code> file that contains its interface definition.</p>
 
 <ul>
-<li><a href="/storm-hackathon/finagle/geocoder.thift">Geocoder</a></li>
+<li><a href="/storm-hackathon/finagle/geocoder.thrift">Geocoder</a></li>
 <li><a href="/storm-hackathon/finagle/spiderbunny.thrift">SpideBunny</a></li>
 <li><a href="/storm-hackathon/finagle/hcache.thrift">HCache</a></li>
 </ul>
@@ -109,8 +111,8 @@
 <p>Use the thrift compiler of your choice to get the bindings for the language you are using (Java, Scala, Ruby, etc.)</p>
 
 <ul>
-<li>Scrooge: compiles to scala-idiomatic classes
-*</li>
+<li><a href="http://thrift.apache.org/">Thrift</a> the original thrift compiler. Supports all common languages.</li>
+<li><a href="https://github.com/twitter/scrooge">Scrooge</a>: compiles to scala-idiomatic classes</li>
 </ul>
 
 
@@ -121,18 +123,29 @@
 <ul>
 <li>Geocoder: <code>cluster-7-slave-06.sl.hackreduce.net:5874</code></li>
 <li>SpiderBunny: <code>cluster-7-slave-07.sl.hackreduce.net:5656</code></li>
-<li><p>HCache: <code>cluster-7-slave-03.sl.hackreduce.net:9098</code></p>
-
-<p> import com.twitter.finagle.<em>
- import com.hopper.spiderbunny.</em></p>
-
-<p> val sb = Thrift.newIface[SpiderBunny.FutureIface](&ldquo;cluster-7-slave-07.sl.hackreduce.net:5656&#8220;`</p>
-
-<p> sb.fetch(&ldquo;<a href="http://www.hackreduce.org">http://www.hackreduce.org</a>&rdquo;)
-   .map { response =>
-     println(&ldquo;Content type is: &rdquo; + response.headers(&ldquo;Content-Type&rdquo;))
-   }</p></li>
+<li>HCache: <code>cluster-7-slave-03.sl.hackreduce.net:9098</code></li>
 </ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">import</span> <span class="nn">com.twitter.finagle._</span>
+</span><span class='line'><span class="k">import</span> <span class="nn">com.hopper.spiderbunny._</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">val</span> <span class="n">sb</span> <span class="k">=</span> <span class="nc">Thrift</span><span class="o">.</span><span class="n">newIface</span><span class="o">[</span><span class="kt">SpiderBunny.FutureIface</span><span class="o">](</span><span class="s">&quot;cluster-7-slave-07.sl.hackreduce.net:5656```</span>
+</span><span class='line'>
+</span><span class='line'><span class="s">sb.fetch(&quot;</span><span class="n">http</span><span class="o">://</span><span class="n">www</span><span class="o">.</span><span class="n">hackreduce</span><span class="o">.</span><span class="n">org</span><span class="s">&quot;)</span>
+</span><span class='line'><span class="s">  .map { response =&gt;</span>
+</span><span class='line'><span class="s">    println(&quot;</span><span class="nc">Content</span> <span class="k">type</span> <span class="kt">is:</span> <span class="err">&quot;</span> <span class="kt">+</span> <span class="kt">response.headers</span><span class="o">(</span><span class="err">&quot;</span><span class="kt">Content-Type</span><span class="err">&quot;</span><span class="o">))</span>
+</span><span class='line'>  <span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
   
