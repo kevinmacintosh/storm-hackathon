@@ -1,7 +1,7 @@
 package com.symc.storm;
 
 import backtype.storm.Config;
-import twitter4j.conf.ConfigurationBuilder;
+import twitter4j.auth.AccessToken;
 import twitter4j.TwitterStream;
 import twitter4j.TwitterStreamFactory;
 import backtype.storm.spout.SpoutOutputCollector;
@@ -70,10 +70,15 @@ public class TwitterSpout extends BaseRichSpout {
 			}
 
 		};
-		TwitterStreamFactory fact = new TwitterStreamFactory(
-				new ConfigurationBuilder().setUser(_username).setPassword(_pwd)
-						.build());
+		TwitterStreamFactory fact = new TwitterStreamFactory();
+		String token = "228505511-bSJET8xOy0PHN3jklOYAQBB3f9TFmkOYb62m2hnA";
+		String tokenSecret = "0mQo1Ay3tQefRSYl5iHPfyQmoJuAJ38Wlsi1O8Cv4Ck";
+		String consumer = "njChgpwWKsJuzUyErMngZg";
+		String consumerSecret = "A9enqKITbufAnmzR47Uqj11xSDUvLokH2iKH5kIHg";
+		AccessToken accessToken = new AccessToken(token, tokenSecret);
 		_twitterStream = fact.getInstance();
+		_twitterStream.setOAuthConsumer(consumer, consumerSecret);
+		_twitterStream.setOAuthAccessToken(accessToken);
 		_twitterStream.addListener(listener);
 		_twitterStream.sample();
 	}
