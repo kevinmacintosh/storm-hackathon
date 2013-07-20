@@ -16,8 +16,9 @@ import twitter4j.Status;
 
 public class SymantecTopology {
 
-	public static class HeatBolt extends BaseBasicBolt {
-		int counter = 0;
+	public static class GetGeoBolt extends BaseBasicBolt {
+		int totCounter = 0;
+		int badCounter = 0;
 		/**
 		 * 
 		 */
@@ -25,22 +26,48 @@ public class SymantecTopology {
 
 		@Override
 		public void execute(Tuple tuple, BasicOutputCollector collector) {
+			totCounter++;
 			Status status = (Status) tuple.getValue(0);
-			counter++;
-			collector.emit(new Values(status.getGeoLocation(), counter));
+			if(status.getGeoLocation() == null){
+				badCounter++;
+			}
+			collector.emit(new Values("No Geolocation: " + badCounter + " -- Total: " + totCounter));
+			
 		}
 
 		@Override
 		public void declareOutputFields(OutputFieldsDeclarer declarer) {
-			declarer.declare(new Fields("heat"));
+			declarer.declare(new Fields("coords"));
 		}
 	}
+	
+/*	public static class getStateBolt extends BaseBasicBolt {
+
+		@Override
+		public void execute(Tuple input, BasicOutputCollector collector) {
+			if(input == null){
+				//collecter.emit(new Values());
+			}
+			float lat = input.getFloat(0);
+			float lon = input.getFloat(1);
+			
+			
+		}
+
+		@Override
+		public void declareOutputFields(OutputFieldsDeclarer declarer) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+	}*/
 
 	public static void main(String[] args) throws Exception {
 		TopologyBuilder builder = new TopologyBuilder();
 
 		builder.setSpout("tweet", new TwitterSpout(), 10);
-		builder.setBolt("heat", new HeatBolt(), 3).shuffleGrouping("tweet");
+		builder.setBolt("coords", new GetGeoBolt(), 3).shuffleGrouping("tweet");
+		
 		Config conf = new Config();
 		conf.setDebug(true);
 
