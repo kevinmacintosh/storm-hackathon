@@ -12,70 +12,57 @@ import backtype.storm.tuple.Tuple;
 import backtype.storm.tuple.Values;
 import backtype.storm.utils.Utils;
 
+import storm.trident.TridentTopology;
 import twitter4j.Status;
 
 public class SymantecTopology {
 
-	public static class GetGeoBolt extends BaseBasicBolt {
-		int totCounter = 0;
-		int badCounter = 0;
-		/**
-		 * 
-		 */
+	public static class getPictureBolt extends BaseBasicBolt {
 		private static final long serialVersionUID = 1L;
 
 		@Override
 		public void execute(Tuple tuple, BasicOutputCollector collector) {
-			totCounter++;
+
 			Status status = (Status) tuple.getValue(0);
-			if(status.getGeoLocation() == null){
-				badCounter++;
-			}
-			collector.emit(new Values("No Geolocation: " + badCounter + " -- Total: " + totCounter));
-			
+
+			collector.emit(new Values(status.getMediaEntities()));
+
 		}
 
 		@Override
 		public void declareOutputFields(OutputFieldsDeclarer declarer) {
-			declarer.declare(new Fields("coords"));
+			declarer.declare(new Fields("pictures"));
 		}
 	}
-	
-/*	public static class getStateBolt extends BaseBasicBolt {
-
-		@Override
-		public void execute(Tuple input, BasicOutputCollector collector) {
-			if(input == null){
-				//collecter.emit(new Values());
-			}
-			float lat = input.getFloat(0);
-			float lon = input.getFloat(1);
-			
-			
-		}
-
-		@Override
-		public void declareOutputFields(OutputFieldsDeclarer declarer) {
-			// TODO Auto-generated method stub
-			
-		}
-		
-	}*/
 
 	public static void main(String[] args) throws Exception {
-		TopologyBuilder builder = new TopologyBuilder();
 
-		builder.setSpout("tweet", new TwitterSpout(), 10);
-		builder.setBolt("coords", new GetGeoBolt(), 3).shuffleGrouping("tweet");
-		
 		Config conf = new Config();
 		conf.setDebug(true);
+
+		TridentTopology builder = new TridentTopology();
+
+		builder.newStream(teamPrefix("tweets"), new TwitterSpout())
+				.parallelismHint(10)
+				.each(new Fields("tweet"), new getPictureBolt(),
+						new Fields("picture"))
+				.persistentAggregate(
+				// A nontransactional state built on Riak (Use their HTTP API to
+				// see progress)
+						new RiakBackingMap.Factory(
+								teamPrefix("Symantec"), // The riak 'bucket'
+														// name to store results
+														// in
+								Common.getRiakHosts(), Common.getRiakPort(),
+								String.class // The type of the data to store
+												// (serialized as json)
+						));
 
 		if (args != null && args.length > 0) {
 			conf.setNumWorkers(3);
 
-			StormSubmitter.submitTopology(args[0], conf,
-					builder.createTopology());
+			HackReduceStormSubmitter.submitTopology("Symantec", config,
+					builder.build());
 		} else {
 
 			LocalCluster cluster = new LocalCluster();
@@ -85,5 +72,4 @@ public class SymantecTopology {
 			cluster.shutdown();
 		}
 	}
-
 }
